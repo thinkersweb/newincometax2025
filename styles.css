@@ -14,12 +14,17 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 300px;
+    width: 350px;
 }
 
 h1 {
     font-size: 24px;
     color: #4CAF50;
+}
+
+h2 {
+    font-size: 20px;
+    color: #333;
 }
 
 label {
@@ -53,5 +58,22 @@ button:hover {
 #result, #comparison {
     margin-top: 20px;
     font-size: 18px;
+    color: #333;
+}
+
+.tax-slabs table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+.tax-slabs th, .tax-slabs td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.tax-slabs th {
+    background-color: #f2f2f2;
     color: #333;
 }
