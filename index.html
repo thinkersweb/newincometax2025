@@ -10,7 +10,6 @@
             font-family: Arial, sans-serif;
             color: #333;
         }
-
         .container {
             max-width: 600px;
             margin: 50px auto;
@@ -49,42 +48,117 @@
         #result {
             margin-top: 20px;
             font-size: 18px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-heading {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0066cc;
+            margin-bottom: 10px;
+        }
+
+        .result-item {
+            margin-bottom: 10px;
+        }
+
+        .result-item strong {
+            color: #333;
+        }
+
+        .result-item span {
+            color: #0066cc;
+            font-weight: bold;
+        }
+
+        /* Highlight the Total tax payable for 2025 */
+        .highlight {
+            background-color: #ffffcc;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #006600;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Tax Calculation for New Regime as per budget 2025</h1>
-
-<p> For more info, visit <a href="https://www.youtube.com/investingfunda">investingfunda</a> </p>
-
-        <label for="salary">Enter your salary:</label>
-        <input type="number" id="salary" placeholder="Enter salary" />
+        <h1>Tax Calculation for New Regime as per Budget 2025</h1>
+        <h4>For more info, visit <a href="https://www.youtube.com/investingfunda">investingfunda</a>!</h4>
+        <label for="salary">Enter Salary:</label>
+        <input type="number" id="salary" placeholder="Taxable Income" />
         <button onclick="calculateTax()">Calculate</button>
         <div id="result"></div>
     </div>
     <script>
         function calculateTax() {
-            const salary = document.getElementById("salary").value;
-            let tax = 0;
+            const salary = parseFloat(document.getElementById("salary").value);
+            let tax2025 = 0;
+            let tax2024 = 0;
 
+            // Calculate tax for 2025
             if (salary > 1200000) {
-                tax += (salary - 1200000) * 0.15;
+                tax2025 += (salary - 1200000) * 0.15;
             }
             if (salary > 800000) {
-                tax += Math.min(salary - 800000, 400000) * 0.10;
+                tax2025 += Math.min(salary - 800000, 400000) * 0.10;
             }
             if (salary > 400000) {
-                tax += Math.min(salary - 400000, 400000) * 0.05;
+                tax2025 += Math.min(salary - 400000, 400000) * 0.05;
             }
 
+            // Apply rebate for 2025 if salary is ₹12,00,000 or below
+            if (salary <= 1200000) {
+                tax2025 = 0; // Full rebate, no tax payable
+            }
+
+            // Calculate tax for 2024
+            if (salary > 1500000) {
+                tax2024 += (salary - 1500000) * 0.30; // 30% on the portion above 15,00,000
+            }
+            if (salary > 1200000) {
+                tax2024 += Math.min(salary - 1200000, 300000) * 0.20; // 20% on the portion between 12,00,001 and 15,00,000
+            }
+            if (salary > 1000000) {
+                tax2024 += Math.min(salary - 1000000, 200000) * 0.15; // 15% on the portion between 10,00,001 and 12,00,000
+            }
+            if (salary > 700000) {
+                tax2024 += Math.min(salary - 700000, 300000) * 0.10; // 10% on the portion between 7,00,001 and 10,00,000
+            }
+            if (salary > 300000) {
+                tax2024 += Math.min(salary - 300000, 400000) * 0.05; // 5% on the portion between 3,00,001 and 7,00,000
+            }
+
+            const benefit = tax2024 - tax2025;
+
             document.getElementById("result").innerHTML = `
-                <strong>Income up to ₹4,00,000:</strong> No tax <br/>
-                <strong>Income from ₹4,00,001 to ₹8,00,000:</strong> 5% tax <br/>
-                <strong>Income from ₹8,00,001 to ₹12,00,000:</strong> 10% tax <br/>
-                <strong>Income from ₹12,00,001 to ₹16,00,000:</strong> 15% tax <br/>
+                <div class="result-heading">Tax Calculation Results</div>
+                <div class="result-item">
+                    <strong>Income up to ₹4,00,000:</strong> <span>No tax</span>
+                </div>
+                <div class="result-item">
+                    <strong>Income from ₹4,00,001 to ₹8,00,000:</strong> <span>5% tax</span>
+                </div>
+                <div class="result-item">
+                    <strong>Income from ₹8,00,001 to ₹12,00,000:</strong> <span>10% tax</span>
+                </div>
+                <div class="result-item">
+                    <strong>Income from ₹12,00,001 to ₹16,00,000:</strong> <span>15% tax</span>
+                </div>
                 <br/>
-                <strong>Total tax payable:</strong> ₹${tax.toFixed(2)}
+                <div class="result-item highlight">
+                    <strong>Total tax payable for 2025:</strong> <span>₹${tax2025.toFixed(2)}</span>
+                </div>
+                <div class="result-item">
+                    <strong>Total tax payable for 2024:</strong> <span>₹${tax2024.toFixed(2)}</span>
+                </div>
+                <div class="result-item">
+                    <strong>Benefit in 2025:</strong> <span>₹${benefit.toFixed(2)}</span>
+                </div>
             `;
         }
     </script>
