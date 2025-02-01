@@ -10,9 +10,25 @@
     <div class="calculator">
         <h1>Income Tax Calculator for FY 25-26</h1>
         <p>Created by Investing Funda</p>
+        
+        <div class="tax-slabs">
+            <h2>New Tax Slabs (FY 25-26)</h2>
+            <table>
+                <tr><th>Income Range</th><th>Tax Rate</th></tr>
+                <tr><td>Up to ₹4 lakh</td><td>No tax</td></tr>
+                <tr><td>₹4 lakh to ₹8 lakh</td><td>5%</td></tr>
+                <tr><td>₹8 lakh to ₹12 lakh</td><td>10%</td></tr>
+                <tr><td>₹12 lakh to ₹16 lakh</td><td>15%</td></tr>
+                <tr><td>₹16 lakh to ₹20 lakh</td><td>20%</td></tr>
+                <tr><td>₹20 lakh to ₹24 lakh</td><td>25%</td></tr>
+                <tr><td>Above ₹24 lakh</td><td>30%</td></tr>
+            </table>
+        </div>
+
         <label for="income">Annual Income:</label>
         <input type="number" id="income" placeholder="Enter your annual income">
         <button onclick="calculateTax()">Calculate Tax</button>
+        
         <div id="result"></div>
         <div id="comparison"></div>
     </div>
