@@ -87,7 +87,7 @@
                 { rate: 30, limit: Infinity }
             ];
 
-            // Define tax slabs for 2024 (example values, should be replaced with actual rates)
+            // Define tax slabs for 2024 (updated values)
             var taxSlabs2024 = [
                 { rate: 0, limit: 250000 },
                 { rate: 5, limit: 500000 },
@@ -116,8 +116,6 @@
             }
 
             var tax2025 = calculateTaxAmount(grossSalary, taxSlabs2025);
-            var tax2024 = calculateTaxAmount(grossSalary, taxSlabs2024);
-            var difference = tax2025 - tax2024;
 
             var resultDiv = document.getElementById('result');
             resultDiv.innerHTML = `
@@ -127,18 +125,9 @@
                     <tr><th>Total Tax (2025)</th><td>${tax2025}</td></tr>
                 </table>
                 
-                <h2>Tax Comparison for FY 2024-25 and FY 2025-26</h2>
-                <table>
-                    <tr><th>Year</th><th>Gross Salary</th><th>Total Tax</th></tr>
-                    <tr><td>2024-25</td><td>${grossSalary}</td><td>${tax2024}</td></tr>
-                    <tr><td>2025-26</td><td>${grossSalary}</td><td>${tax2025}</td></tr>
-                    <tr><td>Difference</td><td colspan="2">${difference}</td></tr>
-                </table>
-                
                 <h2>Income Tax Rates for New Regime</h2>
                 <table>
                     <tr><th>Year</th><th>Tax Rate</th><th>Limit</th></tr>
-                    ${taxSlabs2024.map(slab => `<tr><td>2024-25</td><td>${slab.rate}%</td><td>${slab.limit}</td></tr>`).join('')}
                     ${taxSlabs2025.map(slab => `<tr><td>2025-26</td><td>${slab.rate}%</td><td>${slab.limit}</td></tr>`).join('')}
                 </table>
             `;
