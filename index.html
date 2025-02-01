@@ -100,9 +100,18 @@
             let tax2025 = 0;
             let tax2024 = 0;
 
-            // Calculate tax for 2025
+            // Calculate tax for 2025 based on new slabs
+            if (salary > 2400000) {
+                tax2025 += (salary - 2400000) * 0.30;
+            }
+            if (salary > 2000000) {
+                tax2025 += Math.min(salary - 2000000, 400000) * 0.25;
+            }
+            if (salary > 1600000) {
+                tax2025 += Math.min(salary - 1600000, 400000) * 0.20;
+            }
             if (salary > 1200000) {
-                tax2025 += (salary - 1200000) * 0.15;
+                tax2025 += Math.min(salary - 1200000, 400000) * 0.15;
             }
             if (salary > 800000) {
                 tax2025 += Math.min(salary - 800000, 400000) * 0.10;
@@ -148,6 +157,12 @@
                 </div>
                 <div class="result-item">
                     <strong>Income from ₹12,00,001 to ₹16,00,000:</strong> <span>15% tax</span>
+                </div>
+                <div class="result-item">
+                    <strong>Income from ₹16,00,001 to ₹20,00,000:</strong> <span>20% tax</span>
+                </div>
+                <div class="result-item">
+                    <strong>Income from ₹20,00,001 to ₹24,00,000:</strong> <span>25% tax</span>
                 </div>
                 <br/>
                 <div class="result-item highlight">
