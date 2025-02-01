@@ -7,36 +7,34 @@ body {
     height: 100vh;
     margin: 0;
     overflow-y: scroll;
+    padding: 20px;
 }
 
-.calculator {
+.container {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 350px;
+    max-width: 600px;
+    width: 100%;
 }
 
-h1 {
-    font-size: 24px;
+h1, h2 {
     color: #4CAF50;
 }
 
-h2 {
-    font-size: 20px;
+p {
     color: #333;
 }
 
-label {
-    display: block;
-    margin-top: 10px;
-    color: #555;
+.input-section {
+    margin: 20px 0;
 }
 
 input {
-    padding: 8px;
-    width: 200px;
+    padding: 10px;
+    width: 80%;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -56,25 +54,26 @@ button:hover {
     background-color: #45a049;
 }
 
-#result, #comparison {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #333;
-}
-
-.tax-slabs table {
+.tax-slabs table, #result-table, #comparison-table {
     width: 100%;
     border-collapse: collapse;
     margin: 10px 0;
 }
 
-.tax-slabs th, .tax-slabs td {
+.tax-slabs th, .tax-slabs td, #result-table th, #result-table td, #comparison-table th, #comparison-table td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px;
     text-align: center;
 }
 
 .tax-slabs th {
     background-color: #f2f2f2;
-    color: #333;
+}
+
+#result-section {
+    margin-top: 20px;
+}
+
+#comparison-table th {
+    background-color: #FFD700;
 }
