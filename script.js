@@ -13,12 +13,26 @@ function calculateTax() {
         { limit: Infinity, rate: 0.30 }
     ];
 
-    tax2025 = slabRates2025.reduce((acc, slab) => {
-        const taxableIncome = Math.min(income, slab.limit) - (slab.previousLimit || 0);
-        return acc + Math.max(taxableIncome, 0) * slab.rate;
-    }, 0);
+    let previousLimit = 0;
+    let calculationRows = '';
 
-    // FY 24-25 tax calculation
+    for (let slab of slabRates2025) {
+        const taxableIncome = Math.min(income, slab.limit) - previousLimit;
+        const taxAmount = Math.max(taxableIncome, 0) * slab.rate;
+        tax2025 += taxAmount;
+
+        calculationRows += `
+            <tr>
+                <td>₹${previousLimit} - ₹${slab.limit}</td>
+                <td>${(slab.rate * 100).toFixed(2)}%</td>
+                <td>₹${taxAmount.toFixed(2)}</td>
+            </tr>
+        `;
+
+        previousLimit = slab.limit;
+        if (income <= slab.limit) break;
+    }
+
     if (income <= 300000) {
         tax2024 = 0;
     } else if (income <= 600000) {
@@ -35,30 +49,10 @@ function calculateTax() {
         tax2024 = 225000 + (income - 1800000) * 0.30;
     }
 
-    const resultElement = document.getElementById('result');
-    const comparisonElement = document.getElementById('comparison');
-
-    let calculationDetails = '<table><tr><th>Income Range</th><th>Tax Rate</th><th>Tax Amount</th></tr>';
-    slabRates2025.forEach((slab, index) => {
-        const taxableIncome = Math.min(income, slab.limit) - (slab.previousLimit || 0);
-        const taxAmount = Math.max(taxableIncome, 0) * slab.rate;
-        calculationDetails += `<tr><td>₹${slab.previousLimit || 0} - ₹${slab.limit}</td><td>${(slab.rate * 100).toFixed(2)}%</td><td>₹${taxAmount.toFixed(2)}</td></tr>`;
-        if (taxableIncome > 0) slab.previousLimit = slab.limit;
-    });
-    calculationDetails += `</table>`;
-
-    resultElement.innerHTML = `
-        <p><strong>FY 25-26 Tax Calculation:</strong></p>
-        <p>Annual Income: ₹${income}</p>
-        ${calculationDetails}
-        <p>Calculated Tax: ₹${tax2025.toFixed(2)}</p>
-        ${tax2025 <= 60000 ? `<p>No tax to pay as you will get a rebate for ₹${tax2025.toFixed(2)}</p>` : ''}
-    `;
-
-    comparisonElement.innerHTML = `
-        <p><strong>Comparison with FY 24-25:</strong></p>
-        <p>FY 24-25 Tax: ₹${tax2024.toFixed(2)}</p>
-        <p>FY 25-26 Tax: ₹${tax2025.toFixed(2)}</p>
-        <p>Difference: ₹${(tax2025 - tax2024).toFixed(2)}</p>
+    document.getElementById('result').innerHTML = calculationRows;
+    document.getElementById('comparison').innerHTML = `
+        <tr><th>FY 24-25 Tax</th><td>₹${tax2024.toFixed(2)}</td></tr>
+        <tr><th>FY 25-26 Tax</th><td>₹${tax2025.toFixed(2)}</td></tr>
+        <tr><th>Difference</th><td>₹${(tax2025 - tax2024).toFixed(2)}</td></tr>
     `;
 }
