@@ -3,7 +3,7 @@ function calculateTax() {
     let tax2025 = 0;
     let tax2024 = 0;
 
-    // FY 25-26 tax calculation
+    // FY 25-26 tax calculation n
     if (income <= 400000) {
         tax2025 = 0;
     } else if (income <= 800000) {
