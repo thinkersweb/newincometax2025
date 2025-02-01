@@ -3,133 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Income Tax Calculator for New Tax Regime for FY 2025-26</title>
+    <title>Tax Calculation</title>
     <style>
         body {
+            background-color: #f0f0f0;
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
             color: #333;
-            margin: 0;
-            padding: 20px;
         }
-        h1 {
-            color: #4CAF50;
-            text-align: center;
-        }
+
         .container {
             max-width: 600px;
-            margin: 0 auto;
+            margin: 50px auto;
             padding: 20px;
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        input[type="number"] {
-            width: 100%;
+
+        h1 {
+            color: #0066cc;
+        }
+
+        label, input {
+            font-size: 16px;
+        }
+
+        input {
             padding: 10px;
             margin: 10px 0;
+            width: 100%;
             box-sizing: border-box;
         }
+
         button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
+            padding: 10px 20px;
+            background-color: #0066cc;
+            color: #fff;
             border: none;
             cursor: pointer;
-            width: 100%;
         }
+
         button:hover {
-            background-color: #45a049;
+            background-color: #005bb5;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+
+        #result {
             margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Income Tax Calculator for New Tax Regime for FY 2025-26 Created by <a href="#">investingfunda</a></h1>
-        <label for="grossSalary">Gross Salary:</label>
-        <input type="number" id="grossSalary" placeholder="Enter your gross salary">
-        <button onclick="calculateTax()">Calculate Tax</button>
-        
+        <h1>Tax Calculation for New Regime as per budget 2025</h1>
+
+<p> For more info, visit <a href="https://www.youtube.com/investingfunda">investingfunda</a> </p>
+
+        <label for="salary">Enter your salary:</label>
+        <input type="number" id="salary" placeholder="Enter salary" />
+        <button onclick="calculateTax()">Calculate</button>
         <div id="result"></div>
     </div>
-
     <script>
         function calculateTax() {
-            var grossSalary = document.getElementById('grossSalary').value;
-            if (!grossSalary) {
-                alert('Please enter your gross salary.');
-                return;
+            const salary = document.getElementById("salary").value;
+            let tax = 0;
+
+            if (salary > 1200000) {
+                tax += (salary - 1200000) * 0.15;
+            }
+            if (salary > 800000) {
+                tax += Math.min(salary - 800000, 400000) * 0.10;
+            }
+            if (salary > 400000) {
+                tax += Math.min(salary - 400000, 400000) * 0.05;
             }
 
-            // Define tax slabs for 2025
-            var taxSlabs2025 = [
-                { rate: 0, limit: 250000 },
-                { rate: 5, limit: 500000 },
-                { rate: 10, limit: 750000 },
-                { rate: 15, limit: 1000000 },
-                { rate: 20, limit: 1250000 },
-                { rate: 25, limit: 1500000 },
-                { rate: 30, limit: Infinity }
-            ];
-
-            // Define tax slabs for 2024 (updated values)
-            var taxSlabs2024 = [
-                { rate: 0, limit: 250000 },
-                { rate: 5, limit: 500000 },
-                { rate: 10, limit: 750000 },
-                { rate: 15, limit: 1000000 },
-                { rate: 20, limit: 1250000 },
-                { rate: 25, limit: 1500000 },
-                { rate: 30, limit: Infinity }
-            ];
-
-            function calculateTaxAmount(salary, slabs) {
-                var tax = 0;
-                var remainingSalary = salary;
-
-                for (var i = 0; i < slabs.length; i++) {
-                    if (remainingSalary <= slabs[i].limit) {
-                        tax += (remainingSalary * slabs[i].rate) / 100;
-                        break;
-                    } else {
-                        tax += (slabs[i].limit * slabs[i].rate) / 100;
-                        remainingSalary -= slabs[i].limit;
-                    }
-                }
-
-                return tax;
-            }
-
-            var tax2025 = calculateTaxAmount(grossSalary, taxSlabs2025);
-
-            var resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `
-                <h2>Tax Calculation for FY 2025-26</h2>
-                <table>
-                    <tr><th>Gross Salary</th><td>${grossSalary}</td></tr>
-                    <tr><th>Total Tax (2025)</th><td>${tax2025}</td></tr>
-                </table>
-                
-                <h2>Income Tax Rates for New Regime</h2>
-                <table>
-                    <tr><th>Year</th><th>Tax Rate</th><th>Limit</th></tr>
-                    ${taxSlabs2025.map(slab => `<tr><td>2025-26</td><td>${slab.rate}%</td><td>${slab.limit}</td></tr>`).join('')}
-                </table>
+            document.getElementById("result").innerHTML = `
+                <strong>Income up to ₹4,00,000:</strong> No tax <br/>
+                <strong>Income from ₹4,00,001 to ₹8,00,000:</strong> 5% tax <br/>
+                <strong>Income from ₹8,00,001 to ₹12,00,000:</strong> 10% tax <br/>
+                <strong>Income from ₹12,00,001 to ₹16,00,000:</strong> 15% tax <br/>
+                <br/>
+                <strong>Total tax payable:</strong> ₹${tax.toFixed(2)}
             `;
         }
     </script>
